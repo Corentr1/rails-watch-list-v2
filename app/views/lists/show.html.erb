@@ -1,0 +1,29 @@
+<% if @list.photo.attached? %>
+  <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= cl_image_path @list.photo.key, height: 300, crop: :scale %>);">
+<% else %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://i.picsum.photos/id/1079/4496/3000.jpg?hmac=G-dJcpU08vEMqjUz2rb3IxjOG99rcePqW9BF1IsPLf0);">
+  <% end %>
+  <div class="container">
+    <h1 style="text-align: center"><%= @list.name %></h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="cards">
+    <% @list.bookmarks.each do |bookmark| %>
+      <div class="card" style="width: 18rem;">
+        <img src="<%= bookmark.movie.poster_url %>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= bookmark.movie.title %></h5>
+          <p class="card-text"><%= bookmark.movie.overview %></p>
+          <p><%= bookmark.comment %></p>
+          <%= link_to "Delete", bookmark_path(bookmark), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <div><%= render 'bookmarks/form' %></div>
+</div>
